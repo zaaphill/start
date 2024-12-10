@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="theme-color" content="#9e61ff">
+    <meta name="og:image" content="https://zaap-hill.github.io/favicon.png">
+    <meta name="og:site_name" content="Zaap Hill">
+    <meta name="og:description" content="A community-driven platform to customize avatars, play games, and socialize!">
+
+    <title>Register - Zaap Hill</title>
+    <meta name="og:title" content="Register - Zaap Hill">
+
+    <link href="https://zaap-hill.github.io/favicon.png" rel="icon">
+    <link href="https://zaap-hill.github.io/styles.css" rel="stylesheet" type="text/css">
+    <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous"
+    >
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #1e1e2f; color: white; }
+        .container { max-width: 500px; margin: auto; padding: 20px; text-align: center; }
+        input, button { width: 100%; margin: 10px 0; padding: 10px; border: none; border-radius: 5px; }
+        button { background-color: #4caf50; color: white; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Register to Zaap Hill</h1>
+        <form id="registration-form">
+            <input id="username" type="text" name="username" placeholder="Username" required>
+            <input id="password" type="password" name="password" placeholder="Password" required minlength="6">
+            <input id="password-confirmation" type="password" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <div id="message" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        // Initialize a simple in-memory storage for user accounts
+        const database = {};
+        let accountCounter = 0;
+
+        document.getElementById('registration-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const passwordConfirmation = document.getElementById('password-confirmation').value;
+            const messageDiv = document.getElementById('message');
+
+            // Reset the message
+            messageDiv.textContent = '';
+
+            // Check if passwords match
+            if (password !== passwordConfirmation) {
+                messageDiv.textContent = 'Passwords do not match!';
+                messageDiv.style.color = 'red';
+                return;
+            }
+
+            // Check if username already exists
+            if (database[username]) {
+                messageDiv.textContent = 'Username is already taken!';
+                messageDiv.style.color = 'red';
+                return;
+            }
+
+            // Register the user
+            accountCounter++;
+            database[username] = { password, accountNumber: accountCounter };
+
+            // Redirect to account info page (or display it dynamically)
+            messageDiv.textContent = `Registration successful! Your account number is: ${accountCounter}`;
+            messageDiv.style.color = 'green';
+        });
+    </script>
+</body>
+</html>
